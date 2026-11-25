@@ -12,6 +12,7 @@ import java.io.IOException;
 public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/html/profile.html").forward(req, resp);
+        resp.setContentType("text/html;charset=UTF-8");
+        req.getRequestDispatcher("/jsp/profile.jsp").forward(req, resp);
     }
 }

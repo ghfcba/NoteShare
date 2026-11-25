@@ -12,6 +12,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/html/logout.html").forward(req, resp);
+        resp.setContentType("text/html;charset=UTF-8");
+        req.getRequestDispatcher("/jsp/logout.jsp").forward(req, resp);
     }
 }

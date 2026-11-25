@@ -16,7 +16,8 @@ public class LoginServlet extends HttpServlet {
     private AuthService authService = new AuthService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/html/login.html").forward(req, resp);
+        resp.setContentType("text/html;charset=UTF-8");
+        req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
     }
 
     @Override

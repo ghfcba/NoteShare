@@ -12,6 +12,7 @@ import java.io.IOException;
 public class ComposerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/html/composer.html").forward(req, resp);
+        resp.setContentType("text/html;charset=UTF-8");
+        req.getRequestDispatcher("/jsp/composer.jsp").forward(req, resp);
     }
 }

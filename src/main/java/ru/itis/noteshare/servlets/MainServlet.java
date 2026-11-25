@@ -20,7 +20,7 @@ public class MainServlet extends HttpServlet {
 
 //        System.out.println(user);
 
-        req.getRequestDispatcher("/html/index.html").forward(req,resp);
+        req.getRequestDispatcher("/jsp/main.jsp").forward(req,resp);
     }
 
     @Override
