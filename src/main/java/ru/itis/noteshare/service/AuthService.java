@@ -48,4 +48,22 @@ public class AuthService {
 
         return true;
     }
+
+    public UserModel getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
+    }
+
+    public boolean loginUser(String email, String password){
+        UserModel user = userDao.getUserByEmail(email);
+
+        if(user==null){
+            return false;
+        }
+        System.out.println(user);
+        if (!HashUtil.verify(password, user.getPasswordHash())) {
+            return false;
+        }
+        System.out.println(user);
+        return true;
+    }
 }

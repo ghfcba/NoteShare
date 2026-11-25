@@ -31,5 +31,6 @@ public class RegisterServlet extends HttpServlet {
             authService.registerUser(new UserModel(username, email, password1));
         }
 
+        resp.sendRedirect(req.getContextPath()+"/main");
     }
 }
