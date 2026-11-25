@@ -71,7 +71,7 @@ public class UserDao {
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPasswordHash());
             ps.setTimestamp(4, time);
-            ps.setString(5, user.getRole());
+            ps.setString(5, "USER");
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

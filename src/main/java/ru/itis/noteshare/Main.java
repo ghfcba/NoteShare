@@ -16,7 +16,6 @@ public class Main {
 
         Timestamp time = new Timestamp(date.getTime());
 
-        UserModel dilya = new UserModel( "dilya22284", "d4ily4a@gmail.com", "321", "ADMIN");
 
 
         UserModel user1 =userDao.getUserByUsername("dilya228");

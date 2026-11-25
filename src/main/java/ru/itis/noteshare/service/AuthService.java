@@ -2,10 +2,11 @@ package ru.itis.noteshare.service;
 
 import ru.itis.noteshare.dao.UserDao;
 import ru.itis.noteshare.models.UserModel;
+import ru.itis.noteshare.utils.DataConnection;
 import ru.itis.noteshare.utils.HashUtil;
 
 public class AuthService {
-    private UserDao userDao;
+    private UserDao userDao = new UserDao(DataConnection.getConnection());
 
     public boolean registerUser() {
         return true;

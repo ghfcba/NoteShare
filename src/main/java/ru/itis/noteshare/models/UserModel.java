@@ -18,11 +18,10 @@ public class UserModel {
     private Timestamp registeredAt;
     private String role;
 
-    public UserModel(String username, String email, String passwordHash, String role) {
+    public UserModel(String username, String email, String passwordHash) {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.role = role;
     }
 
     @Override
