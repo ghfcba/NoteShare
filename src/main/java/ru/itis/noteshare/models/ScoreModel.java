@@ -15,7 +15,6 @@ public class ScoreModel {
     private Long composerId;
     private String filePath;
     private String difficulty;
+    private String moderationStatus;
     private LocalDateTime uploadedAt;
-
-
 }

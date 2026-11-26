@@ -56,7 +56,7 @@ public class AuthService {
     public boolean loginUser(String email, String password){
         UserModel user = userDao.getUserByEmail(email);
 
-        if(user==null){
+        if(user == null){
             return false;
         }
         System.out.println(user);

@@ -1,4 +1,5 @@
-!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +19,7 @@
         <p>Добавьте произведение в галерею NoteShare.</p>
     </section>
 
-    <form class="upload-form" action="upload" method="post" enctype="multipart/form-data">
+    <form class="upload-form" action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
         <label for="score-title">Название произведения</label>
         <input id="score-title" name="title" type="text" autocomplete="off" required>
 
