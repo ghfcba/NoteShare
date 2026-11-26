@@ -33,6 +33,7 @@ public class ComposerDao {
             try(ResultSet rs = ps.executeQuery()){
                 if(rs.next()){
                     composerModel = new ComposerModel(
+                            rs.getLong("composer_id"),
                             rs.getString("full_name"),
                             rs.getString("country")
                     );

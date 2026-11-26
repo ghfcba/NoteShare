@@ -13,7 +13,7 @@ public class ScoreDao {
     }
 
     public ScoreModel saveScore(ScoreModel score) {
-        String sql = "insert into scores (title, user_id, composer_id, file_path, difficulty, moderation_status, uploaded_at) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into scores (title, user_id, composer_id, file_path, difficulty, moderation_status, uploaded_at) values (?, ?, ?, ?, ?, ?, ?)";
         java.util.Date date = new Date();
 
         Timestamp time = new Timestamp(date.getTime());

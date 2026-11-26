@@ -16,6 +16,11 @@ public class ComposerService {
 
         return composer.getFullName().toLowerCase().equals(compFromDb.getFullName().toLowerCase());
     }
+
+    public ComposerModel getComposerByName(String fullname) {
+        return composerDao.getCompByFullName(fullname);
+    }
+
     public String compNameUpqrade(String fullName){
         String[] splitName = fullName.split(" ");
         for(String str : splitName){

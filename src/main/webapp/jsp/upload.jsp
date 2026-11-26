@@ -26,6 +26,9 @@
         <label for="composer-name">Композитор</label>
         <input id="composer-name" name="composerName" type="text" autocomplete="off" required>
 
+        <label for="composer-name">Сложность</label>
+        <input id="composer-name" name="diff" type="text" autocomplete="off" required>
+
         <label for="score-file">Файл нот (только PDF)</label>
         <input id="score-file" name="scoreFile" type="file" accept=".pdf,application/pdf" required>
 
