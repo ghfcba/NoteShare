@@ -30,9 +30,10 @@ public class ComposerService {
         for(String s:splitName){
             string += s + " ";
         }
-        string.trim();
+        string.strip();
         return string;
     }
+
     public boolean saveComposer(ComposerModel composer){
         if((checkComposer(composer))){
             return false;

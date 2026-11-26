@@ -2,6 +2,7 @@ package ru.itis.noteshare.models;
 
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
@@ -18,7 +19,7 @@ public class ScoreModel {
     private String filePath; //
     private String difficulty; //
     private String moderationStatus;
-    private LocalDateTime uploadedAt;
+    private Timestamp uploadedAt;
 
 
 
@@ -26,5 +27,19 @@ public class ScoreModel {
         this.title = title;
         this.filePath = filePath;
         this.difficulty = difficulty;
+    }
+
+    @Override
+    public String toString() {
+        return "ScoreModel{" +
+                "scoreId=" + scoreId +
+                ", title='" + title + '\'' +
+                ", userId=" + userId +
+                ", composerId=" + composerId +
+                ", filePath='" + filePath + '\'' +
+                ", difficulty='" + difficulty + '\'' +
+                ", moderationStatus='" + moderationStatus + '\'' +
+                ", uploadedAt=" + uploadedAt +
+                '}';
     }
 }

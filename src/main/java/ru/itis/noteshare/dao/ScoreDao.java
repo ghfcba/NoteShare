@@ -3,7 +3,9 @@ package ru.itis.noteshare.dao;
 import ru.itis.noteshare.models.ScoreModel;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ScoreDao {
     private Connection connection;
@@ -30,5 +32,54 @@ public class ScoreDao {
             throw new RuntimeException(e);
         }
         return score;
+    }
+
+    public List<ScoreModel> getAllNote() {
+        String sql = "select * from scores";
+        List<ScoreModel> scoreList = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ScoreModel scoreModel = ScoreModel.builder()
+                            .scoreId(rs.getLong("score_id"))
+                            .title(rs.getString("title"))
+                            .userId(rs.getLong("user_id"))
+                            .composerId(rs.getLong("composer_id"))
+                            .filePath(rs.getString("file_path"))
+                            .difficulty(rs.getString("difficulty"))
+                            .moderationStatus(rs.getString("moderation_status"))
+                            .uploadedAt(rs.getTimestamp("uploaded_at")).build();
+                    scoreList.add(scoreModel);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return scoreList;
+    }
+
+    public List<ScoreModel> getTitleLike(String title) {
+        String sql = "select * from scores where title = ?";
+        List<ScoreModel> scoreLikeTitle = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, title + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ScoreModel scoreModel = ScoreModel.builder()
+                            .scoreId(rs.getLong("score_id"))
+                            .title(rs.getString("title"))
+                            .userId(rs.getLong("user_id"))
+                            .composerId(rs.getLong("composer_id"))
+                            .filePath(rs.getString("file_path"))
+                            .difficulty(rs.getString("difficulty"))
+                            .moderationStatus(rs.getString("moderation_status"))
+                            .uploadedAt(rs.getTimestamp("uploaded_at")).build();
+                    scoreLikeTitle.add(scoreModel);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return scoreLikeTitle;
     }
 }

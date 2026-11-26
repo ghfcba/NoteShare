@@ -9,6 +9,7 @@ import ru.itis.noteshare.utils.DataConnection;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class ScoreService {
     private ScoreDao scoreDao = new ScoreDao(DataConnection.getConnection());
@@ -36,5 +37,11 @@ public class ScoreService {
         }
 
         return true;
+    }
+    public List<ScoreModel> scorelikeTitle(String title){
+        return scoreDao.getTitleLike(title);
+    }
+    public List<ScoreModel> getAllScores(){
+        return scoreDao.getAllNote();
     }
 }
