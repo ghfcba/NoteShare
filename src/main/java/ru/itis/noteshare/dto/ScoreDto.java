@@ -13,4 +13,5 @@ public class ScoreDto {
     private String composerName;
     private String difficulity;
     private LocalDate date;
+    private Long scoreId;
 }

@@ -10,6 +10,7 @@ import ru.itis.noteshare.models.ScoreModel;
 import ru.itis.noteshare.models.UserModel;
 import ru.itis.noteshare.service.ComposerService;
 import ru.itis.noteshare.service.GenreService;
+import ru.itis.noteshare.service.ScoreGenreService;
 import ru.itis.noteshare.service.ScoreService;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class UploadServlet extends HttpServlet {
     private ScoreService scoreService = new ScoreService();
     private ComposerService composerService = new ComposerService();
     private GenreService genreService = new GenreService();
+    private ScoreGenreService scoreGenreService = new ScoreGenreService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,6 +37,7 @@ public class UploadServlet extends HttpServlet {
         String title = req.getParameter("title");
         String diff = req.getParameter("diff");
         String composerName = req.getParameter("composerName");
+        String genreName = req.getParameter("genre");
 
         ComposerModel composerModel = composerService.getComposerByName(composerName);
 
@@ -48,7 +51,8 @@ public class UploadServlet extends HttpServlet {
         UserModel userModel = (UserModel) session.getAttribute("user");
 
         scoreService.loadFile(part, fileName);
-        scoreService.addScore(userModel, score, composerModel);
+        score = scoreService.addScore(userModel, score, composerModel);
 
+        scoreGenreService.addGenreToScore(score, genreService.getGenreModelByName(genreName));
     }
 }

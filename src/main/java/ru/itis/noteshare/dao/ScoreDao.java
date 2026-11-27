@@ -1,5 +1,6 @@
 package ru.itis.noteshare.dao;
 
+import ru.itis.noteshare.models.ComposerModel;
 import ru.itis.noteshare.models.ScoreModel;
 
 import java.sql.*;
@@ -15,10 +16,15 @@ public class ScoreDao {
     }
 
     public ScoreModel saveScore(ScoreModel score) {
-        String sql = "insert into scores (title, user_id, composer_id, file_path, difficulty, moderation_status, uploaded_at) values (?, ?, ?, ?, ?, ?, ?)";
-        java.util.Date date = new Date();
+        String sql = """
+            INSERT INTO scores
+                (title, user_id, composer_id, file_path, difficulty, moderation_status, uploaded_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            RETURNING score_id
+            """;
 
-        Timestamp time = new Timestamp(date.getTime());
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, score.getTitle());
             ps.setLong(2, score.getUserId());
@@ -27,11 +33,19 @@ public class ScoreDao {
             ps.setString(5, score.getDifficulty());
             ps.setString(6, "pending");
             ps.setTimestamp(7, time);
-            ps.executeUpdate();
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    throw new SQLException("Не удалось получить ID сохранённых нот");
+                }
+
+                score.setScoreId(rs.getLong("score_id"));
+            }
+
+            return score;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return score;
     }
 
     public List<ScoreModel> getAllNote() {
@@ -82,4 +96,50 @@ public class ScoreDao {
         }
         return scoreLikeTitle;
     }
+    public void deleteScore(ScoreModel scoreModel){
+        String sql = "delete from scores where score_id = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setLong(1, scoreModel.getScoreId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateScoreStatus(ScoreModel scoreModel){
+        String sql = "update scores set moderation_status = ? where score_id = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setString(1, scoreModel.getModerationStatus());
+            ps.setLong(2, scoreModel.getScoreId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ScoreModel getScoreById(Long scoreId) {
+        String sql = "select * from scores where composer_id = ?";
+        ScoreModel scoreModel = null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setLong(1, scoreId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    scoreModel = new ScoreModel().builder()
+                            .scoreId(rs.getLong("score_id"))
+                            .title(rs.getString("title"))
+                            .userId(rs.getLong("user_id"))
+                            .composerId(rs.getLong("composer_id"))
+                            .filePath(rs.getString("file_path"))
+                            .difficulty(rs.getString("difficulty"))
+                            .moderationStatus(rs.getString("moderation_status"))
+                            .uploadedAt(rs.getTimestamp("uploaded_at")).build();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return scoreModel;
+    }
+
 }

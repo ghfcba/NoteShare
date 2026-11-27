@@ -21,4 +21,12 @@ public class GenreService {
 
         return genreDao.getAllGenres();
     }
+
+    public GenreModel getGenreModelById(Long id) {
+        return genreDao.getGenreById(id);
+    }
+
+    public GenreModel getGenreModelByName(String name){
+        return genreDao.getGenreByName(name);
+    }
 }

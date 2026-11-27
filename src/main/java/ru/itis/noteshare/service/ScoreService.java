@@ -19,12 +19,10 @@ public class ScoreService {
     private ScoreDao scoreDao = new ScoreDao(DataConnection.getConnection());
     private static final String dir = "C:\\Users\\MSI\\IdeaProjects\\NoteShare\\src\\main\\webapp\\assets\\scores";
 
-    public void addScore(UserModel user, ScoreModel score, ComposerModel composer){
+    public ScoreModel addScore(UserModel user, ScoreModel score, ComposerModel composer){
         score.setUserId(user.getUserId());
         score.setComposerId(composer.getComposerId());
-
-
-        scoreDao.saveScore(score);
+        return scoreDao.saveScore(score);
     }
 
     public boolean loadFile(Part part, String fileName) {
@@ -59,6 +57,14 @@ public class ScoreService {
         return listDto;
     }
 
+    public void updateScoreStatus(ScoreModel scoreModel){
+        scoreDao.updateScoreStatus(scoreModel);
+    }
 
-    public void addGenreToScore(ScoreModel scoreModel, ScoreGenreModel scoreGenreModel) {}
+    public void deleteScore(ScoreModel scoreModel){
+        scoreDao.deleteScore(scoreModel);
+    }
+    public ScoreModel getScoreById(Long scoreId){
+        return scoreDao.getScoreById(scoreId);
+    }
 }

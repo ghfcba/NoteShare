@@ -12,6 +12,7 @@ public class Mapper {
                 .composerName(composerService.getComposerById(scoreModel.getComposerId()).getFullName())
                 .difficulity(scoreModel.getDifficulty())
                 .date(scoreModel.getUploadedAt().toLocalDateTime().toLocalDate())
+                .scoreId(scoreModel.getScoreId())
                 .build();
 
         return scoreDto;

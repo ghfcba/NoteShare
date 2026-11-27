@@ -34,4 +34,42 @@ public class GenreDao {
         }
         return listOfGenres;
     }
+    public GenreModel getGenreById(Long genreId){
+        String sql = "select * from genres where genre_id = ?";
+        GenreModel genreModel = null;
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setLong(1, genreId);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    genreModel = GenreModel.builder()
+                            .genreId(rs.getLong("genre_id"))
+                            .name(rs.getString("name"))
+                            .build();
+                }
+
+            }
+
+            return genreModel;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public GenreModel getGenreByName(String name){
+        String sql = "select * from genres where name = ?";
+        GenreModel genreModel = null;
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setString(1, name);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    genreModel = GenreModel.builder()
+                            .genreId(rs.getLong("genre_id"))
+                            .name(rs.getString("name"))
+                            .build();
+                }
+            }
+            return genreModel;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
