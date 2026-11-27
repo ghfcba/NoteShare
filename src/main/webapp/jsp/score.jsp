@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/score.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
 </head>
-<body>
+<body class="score-gallery-page">
 <jsp:include page="/jsp/fragments/header.jsp" />
 
-<main class="page-shell listing-page score-page">
+<main class="score-page">
     <section class="page-heading">
         <p class="eyebrow">Открывайте и находите музыку</p>
         <h1>Галерея нот</h1>
@@ -35,9 +35,12 @@
             <h2>Популярные ноты</h2>
         </div>
 
+        <c:if test="${empty list}">
+            <p class="score-empty">В каталоге пока нет нот для показа.</p>
+        </c:if>
+
         <div class="score-grid">
             <c:forEach var="score" items="${list}">
-
                 <c:url var="itemUrl" value="/score/page">
                     <c:param name="id" value="${score.scoreId}"/>
                 </c:url>
@@ -56,19 +59,18 @@
                             <dl class="score-details">
                                 <div>
                                     <dt>Сложность</dt>
-                                    <dd>${score.difficulity}</dd>
+                                    <dd><c:out value="${score.difficulity}" /></dd>
                                 </div>
                             </dl>
                         </div>
 
                         <div class="score-card__footer">
-                            <span>${score.date}</span>
+                            <span><c:out value="${score.date}" /></span>
                             <span class="score-card__action" aria-hidden="true">Открыть ноты →</span>
                         </div>
                     </a>
                 </article>
             </c:forEach>
-
         </div>
     </section>
 </main>

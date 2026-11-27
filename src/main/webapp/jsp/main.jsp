@@ -47,7 +47,7 @@
                 <span class="card-arrow" aria-hidden="true">→</span>
             </a>
 
-            <a class="section-card" href="composer">
+            <a class="section-card" href="composers">
                 <span class="card-number">02</span>
                 <span class="card-icon" aria-hidden="true">𝄞</span>
                 <h3>Композиторы</h3>

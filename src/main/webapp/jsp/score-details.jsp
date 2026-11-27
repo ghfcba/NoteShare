@@ -11,27 +11,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
 </head>
 <body>
-<header class="site-header">
-    <div class="header-inner">
-        <a class="site-brand" href="${pageContext.request.contextPath}/main">
-            <img class="site-logo" src="${pageContext.request.contextPath}/assets/images/logo.jpeg" alt="">
-            <span>NoteShare</span>
-        </a>
-        <div class="menu-container">
-            <button class="menu-toggle" type="button" aria-label="Открыть меню">
-                <span class="menu-label">МЕНЮ</span>
-            </button>
-            <nav class="drop_menu" aria-label="Основная навигация">
-                <ul>
-                    <li><a href="${pageContext.request.contextPath}/main">Главная</a></li>
-                    <li><a href="${pageContext.request.contextPath}/score">Галерея нот</a></li>
-                    <li><a href="${pageContext.request.contextPath}/composer">Композиторы</a></li>
-                    <li><a href="${pageContext.request.contextPath}/profile">Профиль</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</header>
+<jsp:include page="/jsp/fragments/header.jsp" />
 
 <main class="page-shell score-detail-page">
     <a class="back-link" href="${pageContext.request.contextPath}/score">← Вернуться в галерею</a>
@@ -47,7 +27,7 @@
                         <c:out value="${composer.fullName}" default="Композитор не указан"/>
                     </p>
                     <a class="download-button"
-                       href="${pageContext.request.contextPath}/download?scoreId=${score.scoreId}">
+                       href="${pageContext.request.contextPath}/download?scoreId=${score.scoreId}&amp;download=true">
                         Скачать PDF
                     </a>
                 </section>
@@ -75,10 +55,6 @@
                 </section>
 
                 <section class="pdf-section">
-                    <div class="section-heading">
-                        <h2>Просмотр нот</h2>
-                        <a href="${pageContext.request.contextPath}/download?scoreId=${score.scoreId}">Открыть PDF отдельно</a>
-                    </div>
                     <iframe class="pdf-viewer"
                             src="${pageContext.request.contextPath}/download?scoreId=${score.scoreId}#toolbar=0"
                             title="Ноты: ${score.title}">
