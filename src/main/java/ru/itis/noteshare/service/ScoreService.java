@@ -4,6 +4,7 @@ import jakarta.servlet.http.Part;
 import ru.itis.noteshare.dao.ScoreDao;
 import ru.itis.noteshare.dto.ScoreDto;
 import ru.itis.noteshare.models.ComposerModel;
+import ru.itis.noteshare.models.ScoreGenreModel;
 import ru.itis.noteshare.models.ScoreModel;
 import ru.itis.noteshare.models.UserModel;
 import ru.itis.noteshare.utils.DataConnection;
@@ -44,9 +45,11 @@ public class ScoreService {
     public List<ScoreModel> scorelikeTitle(String title){
         return scoreDao.getTitleLike(title);
     }
+
     public List<ScoreModel> getAllScores(){
         return scoreDao.getAllNote();
     }
+
     public List<ScoreDto> getDtoScores(){
         List<ScoreModel> scores = scoreDao.getAllNote();
         List<ScoreDto> listDto = new ArrayList<>();
@@ -57,4 +60,5 @@ public class ScoreService {
     }
 
 
+    public void addGenreToScore(ScoreModel scoreModel, ScoreGenreModel scoreGenreModel) {}
 }
