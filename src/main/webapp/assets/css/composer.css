@@ -1,0 +1,196 @@
+.composer-gallery-page {
+    --green: #064E3B;
+    --green-dark: #022C22;
+    --green-soft: #527568;
+    --cream: #F5F8F2;
+
+    min-height: 100vh;
+    margin: 0;
+    color: var(--green-dark);
+    background: var(--cream);
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.composer-page,
+.composer-page *,
+.composer-page *::before,
+.composer-page *::after {
+    box-sizing: border-box;
+}
+
+.composer-page {
+    width: min(1180px, calc(100% - 40px));
+    min-height: 60vh;
+    margin: 0 auto;
+    padding: clamp(38px, 6vw, 72px) 0 clamp(50px, 8vw, 88px);
+}
+
+.composer-page .page-heading {
+    max-width: 760px;
+    margin: 0 auto 34px;
+    text-align: center;
+}
+
+.composer-page .page-heading h1 {
+    margin: 0;
+    color: var(--green);
+    font-size: clamp(34px, 5vw, 48px);
+    font-weight: 400;
+}
+
+.composer-page .page-heading > p:last-child {
+    margin: 14px 0 0;
+    color: var(--green-soft);
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.composer-page .search-panel {
+    max-width: 760px;
+    margin: 0 auto 46px;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid rgba(201, 165, 92, .55);
+    border-radius: 16px;
+    box-shadow: 0 10px 28px rgba(6, 78, 59, .07);
+}
+
+.composer-page .search-panel label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--green);
+    font-size: 15px;
+}
+
+.composer-page .search-row { display: flex; gap: 10px; }
+
+.composer-page .search-row input {
+    flex: 1;
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px 15px;
+    color: var(--green-dark);
+    font: 16px Georgia, serif;
+    background: #FBFCF9;
+    border: 1px solid #C8D6CC;
+    border-radius: 9px;
+}
+
+.composer-page .search-row button {
+    min-height: 48px;
+    padding: 12px 18px;
+    border: 1px solid var(--green);
+    border-radius: 9px;
+    color: #fff;
+    background: var(--green);
+    font: inherit;
+    cursor: pointer;
+}
+
+.composer-page .search-row button:hover {
+    background: var(--green-dark);
+}
+
+.composer-page .composer-empty {
+    margin: 0;
+    color: var(--green-soft);
+}
+
+.composer-page .composer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 255px), 1fr));
+    gap: 28px 22px;
+    padding: 6px 4px;
+}
+
+.composer-page .composer-card {
+    display: flex;
+    min-width: 0;
+    --card-shape: 23% 34% 24% 30% / 21% 24% 28% 26%;
+}
+
+.composer-page .composer-card:nth-child(even) {
+    --card-shape: 32% 24% 33% 23% / 26% 17% 23% 30%;
+}
+
+.composer-page .composer-card__link {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+    min-height: 214px;
+    padding: 26px 26px 24px;
+    border: 1px solid rgba(82, 117, 104, .36);
+    border-radius: var(--card-shape);
+    color: var(--green-dark);
+    background: linear-gradient(150deg, #fff 10%, #fbfdf9d9 64%, #eaf3e6a6);
+    box-shadow: 0 10px 25px -12px rgba(6, 78, 59, .22);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.composer-page .composer-card__link::before {
+    position: absolute;
+    inset: 4px -4px -5px 4px;
+    border: 1px solid rgba(201, 165, 92, .58);
+    border-radius: 31% 23% 33% 25% / 23% 31% 23% 26%;
+    pointer-events: none;
+    content: "";
+}
+
+.composer-page .composer-card__link:hover,
+.composer-page .composer-card__link:focus-visible {
+    border-color: var(--green);
+    box-shadow: 0 16px 28px -12px rgba(6, 78, 59, .27);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .composer-page .composer-card__link:hover { transform: translateY(-4px); }
+}
+
+.composer-page .composer-card__link:focus-visible,
+.composer-page .search-row button:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 5px;
+}
+
+.composer-page .composer-card__icon {
+    color: #927030;
+    font-size: 32px;
+    line-height: 1;
+}
+
+.composer-page .composer-card__content h2 {
+    margin: 0;
+    color: var(--green);
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.composer-page .composer-card__country {
+    margin: 8px 0 0;
+    color: var(--green-soft);
+    line-height: 1.4;
+}
+
+.composer-page .composer-card__action {
+    margin-top: auto;
+    color: var(--green);
+    font-size: 14px;
+}
+
+.composer-page .composer-card__link:hover .composer-card__action,
+.composer-page .composer-card__link:focus-visible .composer-card__action {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    .composer-page .search-row { flex-direction: column; }
+    .composer-page .composer-card__link { padding: 24px; }
+}

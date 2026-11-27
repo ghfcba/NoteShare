@@ -1,0 +1,28 @@
+:root { --green:#064E3B; --green-dark:#022C22; --green-soft:#527568; --gold:#C9A55C; --cream:#F5F8F2; }
+* { box-sizing:border-box; }
+body { min-height:100vh; margin:0; color:var(--green-dark); background:var(--cream); font-family:Georgia,"Times New Roman",serif; }
+.upload-page { width:min(850px,calc(100% - 48px)); min-height:60vh; margin:0 auto; padding:72px 0 88px; }
+.page-heading { margin:0 auto 34px; text-align:center; }
+.eyebrow { margin:0 0 12px; color:#9B7937; font-size:12px; letter-spacing:2.5px; text-transform:uppercase; }
+.page-heading h1 { margin:0; color:var(--green); font-size:clamp(34px,5vw,48px); font-weight:400; }
+.page-heading > p:last-child { margin:14px 0 0; color:var(--green-soft); font-size:17px; line-height:1.6; }
+.upload-form { display:grid; gap:10px; padding:clamp(24px,5vw,40px); background:#fff; border:1px solid rgba(201,165,92,.55); border-radius:18px; box-shadow:0 14px 36px rgba(6,78,59,.08); }
+.upload-form label { margin-top:6px; color:var(--green-dark); font-size:15px; }
+.upload-form input:not([type="file"]) { width:100%; min-height:48px; padding:11px 13px; color:var(--green-dark); font:16px Georgia,serif; background:#FBFCF9; border:1px solid #C8D6CC; border-radius:9px; }
+.upload-form input[type="file"] { width:100%; padding:12px; color:var(--green-soft); font:14px Georgia,serif; background:#FBFCF9; border:1px dashed #9AB5A3; border-radius:9px; }
+.upload-form input:focus { border-color:var(--gold); outline:3px solid rgba(201,165,92,.18); }
+.upload-form input[type="file"]::file-selector-button { margin-right:12px; padding:9px 13px; color:var(--green); font:14px Georgia,serif; background:#E7F0E9; border:1px solid #B8CCBD; border-radius:7px; cursor:pointer; }
+.upload-form button { min-height:49px; margin-top:14px; color:#FFF8E7; font:16px Georgia,serif; background:var(--green); border:1px solid var(--gold); border-radius:9px; cursor:pointer; transition:background .2s ease,transform .2s ease; }
+.upload-form button:hover { transform:translateY(-1px); background:#0A624B; }
+:focus-visible { outline-color:rgba(201,165,92,.8); outline-offset:3px; }
+@media(max-width:560px) { .upload-page { width:calc(100% - 32px); padding:52px 0 64px; } .page-heading > p:last-child { font-size:15px; } }
+
+.score-page select,
+.score-select {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px 15px;
+    color: var(--green-dark);
+    font: 16px Georgia, serif;
+    background-color: #FBFCF9;
