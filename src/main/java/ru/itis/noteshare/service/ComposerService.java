@@ -4,6 +4,9 @@ import ru.itis.noteshare.dao.ComposerDao;
 import ru.itis.noteshare.models.ComposerModel;
 import ru.itis.noteshare.utils.DataConnection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ComposerService {
     public ComposerDao composerDao = new ComposerDao(DataConnection.getConnection());
 
@@ -47,4 +50,14 @@ public class ComposerService {
 
         return true;
     }
+
+    public ComposerModel getComposerById(Long composerId){
+        return composerDao.getCompById(composerId);
+    }
+
+
+    public List<ComposerModel> getAllComposers(){
+        return composerDao.getAllComposers();
+    }
+
 }

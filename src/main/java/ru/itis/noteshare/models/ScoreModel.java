@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ScoreModel {
     private Long scoreId;
-    private String title; //
-    private Long userId; //
-    private Long composerId; //
-    private String filePath; //
-    private String difficulty; //
+    private String title;
+    private Long userId;
+    private Long composerId;
+    private String filePath;
+    private String difficulty;
     private String moderationStatus;
     private Timestamp uploadedAt;
 

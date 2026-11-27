@@ -2,13 +2,16 @@ package ru.itis.noteshare.service;
 
 import jakarta.servlet.http.Part;
 import ru.itis.noteshare.dao.ScoreDao;
+import ru.itis.noteshare.dto.ScoreDto;
 import ru.itis.noteshare.models.ComposerModel;
 import ru.itis.noteshare.models.ScoreModel;
 import ru.itis.noteshare.models.UserModel;
 import ru.itis.noteshare.utils.DataConnection;
+import ru.itis.noteshare.utils.Mapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreService {
@@ -44,4 +47,14 @@ public class ScoreService {
     public List<ScoreModel> getAllScores(){
         return scoreDao.getAllNote();
     }
+    public List<ScoreDto> getDtoScores(){
+        List<ScoreModel> scores = scoreDao.getAllNote();
+        List<ScoreDto> listDto = new ArrayList<>();
+        for(ScoreModel scoreModel : scores){
+            listDto.add(Mapper.modelToDto(scoreModel));
+        }
+        return listDto;
+    }
+
+
 }
