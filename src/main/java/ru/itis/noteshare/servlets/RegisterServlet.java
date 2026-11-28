@@ -6,8 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ru.itis.noteshare.models.UserModel;
 import ru.itis.noteshare.service.AuthService;
-import ru.itis.noteshare.validation.ValidationException;
 
 import java.io.IOException;
 
@@ -17,14 +17,13 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
         authService = (AuthService) config.getServletContext().getAttribute("authservice");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        req.getRequestDispatcher("/jsp/register.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/register.jsp").forward(req,resp);
     }
 
     @Override
@@ -34,13 +33,10 @@ public class RegisterServlet extends HttpServlet {
         String password1 = req.getParameter("password");
         String password2 = req.getParameter("passwordConfirm");
 
-        try {
-            authService.registerUser(username, email, password1, password2);
-            resp.sendRedirect(req.getContextPath() + "/login");
-        } catch (ValidationException e) {
-            req.setAttribute("username", username);
-            req.setAttribute("email", email);
-            req.getRequestDispatcher("/jsp/register.jsp").forward(req, resp);
+        if(authService.checkPass(password1,password2)){
+            authService.registerUser(new UserModel(username, email, password1));
         }
+
+        resp.sendRedirect(req.getContextPath()+"/main");
     }
 }

@@ -9,7 +9,9 @@ import ru.itis.noteshare.models.UserModel;
 import ru.itis.noteshare.validation.ValidationException;
 import ru.itis.noteshare.validation.Validator;
 
-
+/**
+ * Сценарий загрузки нот: валидация, сохранение файла, запись в БД и привязка жанра.
+ */
 public class ScoreUploadService {
     private final ScoreService scoreService;
     private final ComposerService composerService;
@@ -17,7 +19,11 @@ public class ScoreUploadService {
     private final ScoreGenreService scoreGenreService;
     private final FileStorageService fileStorageService;
 
-    public ScoreUploadService(ScoreService scoreService, ComposerService composerService, GenreService genreService, ScoreGenreService scoreGenreService, FileStorageService fileStorageService) {
+    public ScoreUploadService(ScoreService scoreService,
+                              ComposerService composerService,
+                              GenreService genreService,
+                              ScoreGenreService scoreGenreService,
+                              FileStorageService fileStorageService) {
         this.scoreService = scoreService;
         this.composerService = composerService;
         this.genreService = genreService;
@@ -25,42 +31,31 @@ public class ScoreUploadService {
         this.fileStorageService = fileStorageService;
     }
 
-    public ScoreModel upload(UserModel user, String title, String difficulty, String composerName, String genreName[], Part part) {
+    public ScoreModel upload(UserModel user, String title, String difficulty,
+                             String composerName, String genreName, Part part) {
         String cleanTitle = Validator.requireText(title, "Название произведения", 150);
         String cleanDifficulty = Difficulity.fromValue(difficulty).getValue();
         String cleanComposerName = Validator.requireText(composerName, "Композитор", 100);
+        String cleanGenreName = Validator.requireText(genreName, "Жанр", 50);
 
-        for (String str : genreName) {
-            String cleanGenreName = Validator.requireText(str, "Жанр", 50);
+        if (user == null) {
+            throw new ValidationException("Необходимо войти в систему");
         }
-
 
         ComposerModel composer = composerService.getComposerByName(cleanComposerName);
         if (composer == null) {
-            throw new ValidationException("Композитор " + cleanComposerName + " не найден");
+            throw new ValidationException("Композитор \"" + cleanComposerName + "\" не найден");
         }
 
-        GenreModel[] models = new GenreModel[genreName.length];
-
-        for (int i = 0; i < genreName.length; i++) {
-            GenreModel genre = genreService.getGenreModelByName(genreName[i]);
-
-            models[i] = genre;
-
-            if (genre == null) {
-                throw new ValidationException("Жанр " + genreName[i] + " не найден");
-            }
+        GenreModel genre = genreService.getGenreModelByName(cleanGenreName);
+        if (genre == null) {
+            throw new ValidationException("Жанр \"" + cleanGenreName + "\" не найден");
         }
-
 
         String fileName = fileStorageService.savePdf(part);
         ScoreModel score = new ScoreModel(cleanTitle, fileName, cleanDifficulty);
         score = scoreService.addScore(user, score, composer);
-
-        for (GenreModel genreModel : models) {
-            scoreGenreService.addGenreToScore(score, genreModel);
-        }
-
+        scoreGenreService.addGenreToScore(score, genre);
 
         return score;
     }

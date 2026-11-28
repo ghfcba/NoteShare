@@ -1,9 +1,11 @@
 package ru.itis.noteshare.enums;
 
-import lombok.Getter;
 import ru.itis.noteshare.validation.ValidationException;
 
-@Getter
+/**
+ * Значения соответствуют CHECK (moderation_status IN ('pending', 'approved', 'rejected'))
+ * в схеме.
+ */
 public enum ModerationStatus {
     PENDING("pending"),
     APPROVED("approved"),
@@ -15,6 +17,9 @@ public enum ModerationStatus {
         this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
 
     public static ModerationStatus fromValue(String value) {
         if (value == null || value.trim().isEmpty()) {

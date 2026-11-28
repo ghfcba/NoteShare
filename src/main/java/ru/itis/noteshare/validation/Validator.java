@@ -2,13 +2,17 @@ package ru.itis.noteshare.validation;
 
 import java.util.regex.Pattern;
 
-
+/**
+ * Набор проверок входных данных.
+ * Ограничения длины повторяют схему БД (01_schema.sql).
+ */
 public final class Validator {
     private static final Pattern EMAIL_PATTERN =
             Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
     private static final int PASSWORD_MIN_LENGTH = 8;
-    private static final int PASSWORD_MAX_LENGTH = 16;
+    // BCrypt использует максимум 72 байта пароля
+    private static final int PASSWORD_MAX_LENGTH = 72;
 
     private Validator() {
     }
@@ -50,7 +54,9 @@ public final class Validator {
         }
 
         if (value.length() > PASSWORD_MAX_LENGTH) {
-            throw new ValidationException("Пароль не должен превышать " + PASSWORD_MAX_LENGTH + " символов");
+            throw new ValidationException(
+                    "Пароль не должен превышать " + PASSWORD_MAX_LENGTH + " символов"
+            );
         }
 
         return value;

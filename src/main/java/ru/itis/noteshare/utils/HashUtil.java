@@ -4,7 +4,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class HashUtil {
     public static String hashPassword(String pass) {
-        String salt = BCrypt.gensalt(12);
+        String salt = BCrypt.gensalt(16);
 
         return BCrypt.hashpw(pass,salt);
     }

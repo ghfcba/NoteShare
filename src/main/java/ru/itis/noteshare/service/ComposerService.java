@@ -2,15 +2,13 @@ package ru.itis.noteshare.service;
 
 import ru.itis.noteshare.dao.ComposerDao;
 import ru.itis.noteshare.models.ComposerModel;
+import ru.itis.noteshare.utils.DataConnection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ComposerService {
-    private final ComposerDao composerDao;
-
-    public ComposerService(ComposerDao composerDao) {
-        this.composerDao = composerDao;
-    }
+    public ComposerDao composerDao = new ComposerDao(DataConnection.getConnection());
 
     public boolean checkComposer(ComposerModel composer){
         ComposerModel compFromDb = composerDao.getCompByFullName(composer.getFullName());

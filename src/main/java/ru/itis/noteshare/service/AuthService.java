@@ -2,12 +2,17 @@ package ru.itis.noteshare.service;
 
 import ru.itis.noteshare.dao.UserDao;
 import ru.itis.noteshare.models.UserModel;
+import ru.itis.noteshare.utils.DataConnection;
 import ru.itis.noteshare.utils.HashUtil;
 import ru.itis.noteshare.validation.ValidationException;
 import ru.itis.noteshare.validation.Validator;
 
 public class AuthService {
     private final UserDao userDao;
+
+    public AuthService() {
+        this(new UserDao(DataConnection.getConnection()));
+    }
 
     public AuthService(UserDao userDao) {
         this.userDao = userDao;
@@ -21,11 +26,30 @@ public class AuthService {
         return userDao.getUserByEmail(email) == null;
     }
 
+    public boolean checkPass(String password1, String password2) {
+        return password1.equals(password2);
+    }
+
     public void passHash(UserModel userModel) {
         userModel.setPasswordHash(HashUtil.hashPassword(userModel.getPasswordHash()));
     }
 
-    public void registerUser(String username, String email, String password, String passwordConfirm) {
+    public boolean registerUser(UserModel user) {
+        if (!uniqueEmail(user.getEmail())) {
+            return false;
+        }
+        if (!uniqueUsername(user.getUsername())) {
+            return false;
+        }
+
+        passHash(user);
+        userDao.saveUser(user);
+
+        return true;
+    }
+
+    public void registerUser(String username, String email,
+                             String password, String passwordConfirm) {
         String cleanUsername = Validator.requireText(username, "Имя пользователя", 50);
         String cleanEmail = Validator.requireEmail(email);
         Validator.requirePassword(password);

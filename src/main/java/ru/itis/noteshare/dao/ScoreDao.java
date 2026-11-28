@@ -96,7 +96,6 @@ public class ScoreDao {
         }
         return scoreLikeTitle;
     }
-
     public void deleteScore(ScoreModel scoreModel){
         String sql = "delete from scores where score_id = ?";
         try(PreparedStatement ps = connection.prepareStatement(sql)){
@@ -107,7 +106,6 @@ public class ScoreDao {
             throw new RuntimeException(e);
         }
     }
-
     public void updateScoreStatus(ScoreModel scoreModel){
         String sql = "update scores set moderation_status = ? where score_id = ?";
         try(PreparedStatement ps = connection.prepareStatement(sql)){
@@ -118,33 +116,6 @@ public class ScoreDao {
             throw new RuntimeException(e);
         }
     }
-
-
-    public List<ScoreModel> getScoresByComposerId(Long composerId) {
-        String sql = "select * from scores where composer_id = ?";
-        List<ScoreModel> scoreList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setLong(1, composerId);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    ScoreModel scoreModel = ScoreModel.builder()
-                            .scoreId(rs.getLong("score_id"))
-                            .title(rs.getString("title"))
-                            .userId(rs.getLong("user_id"))
-                            .composerId(rs.getLong("composer_id"))
-                            .filePath(rs.getString("file_path"))
-                            .difficulty(rs.getString("difficulty"))
-                            .moderationStatus(rs.getString("moderation_status"))
-                            .uploadedAt(rs.getTimestamp("uploaded_at")).build();
-                    scoreList.add(scoreModel);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return scoreList;
-    }
-
     public ScoreModel getScoreById(Long scoreId) {
         String sql = "select * from scores where score_id = ?";
         ScoreModel scoreModel = null;
@@ -171,33 +142,8 @@ public class ScoreDao {
         }
         return scoreModel;
     }
-
-
     public List<ScoreModel> getAllPendingScores() {
         String sql = "select * from scores where moderation_status = 'pending' ";
-        List<ScoreModel> scoreList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    ScoreModel scoreModel = ScoreModel.builder()
-                            .scoreId(rs.getLong("score_id"))
-                            .title(rs.getString("title"))
-                            .userId(rs.getLong("user_id"))
-                            .composerId(rs.getLong("composer_id"))
-                            .filePath(rs.getString("file_path"))
-                            .difficulty(rs.getString("difficulty"))
-                            .moderationStatus(rs.getString("moderation_status"))
-                            .uploadedAt(rs.getTimestamp("uploaded_at")).build();
-                    scoreList.add(scoreModel);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return scoreList;
-    }
-    public List<ScoreModel> getAllApprovedScores() {
-        String sql = "select * from scores where moderation_status = 'approved' ";
         List<ScoreModel> scoreList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {

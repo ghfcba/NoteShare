@@ -1,6 +1,5 @@
 package ru.itis.noteshare.servlets;
 
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,14 +14,7 @@ import java.util.List;
 
 @WebServlet("/score")
 public class ScoreServlet extends HttpServlet {
-    private ScoreService scoreService;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        scoreService = (ScoreService) config.getServletContext().getAttribute("scoreservice");
-    }
-
+    private ScoreService scoreService = new ScoreService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<ScoreDto> list = scoreService.getDtoScores();

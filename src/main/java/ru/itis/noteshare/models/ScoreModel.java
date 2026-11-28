@@ -28,4 +28,18 @@ public class ScoreModel {
         this.filePath = filePath;
         this.difficulty = difficulty;
     }
+
+    @Override
+    public String toString() {
+        return "ScoreModel{" +
+                "scoreId=" + scoreId +
+                ", title='" + title + '\'' +
+                ", userId=" + userId +
+                ", composerId=" + composerId +
+                ", filePath='" + filePath + '\'' +
+                ", difficulty='" + difficulty + '\'' +
+                ", moderationStatus='" + moderationStatus + '\'' +
+                ", uploadedAt=" + uploadedAt +
+                '}';
+    }
 }

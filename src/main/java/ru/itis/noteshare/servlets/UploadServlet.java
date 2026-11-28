@@ -1,52 +1,58 @@
 package ru.itis.noteshare.servlets;
 
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import ru.itis.noteshare.enums.Difficulity;
+import ru.itis.noteshare.models.ComposerModel;
+import ru.itis.noteshare.models.GenreModel;
+import ru.itis.noteshare.models.ScoreModel;
 import ru.itis.noteshare.models.UserModel;
+import ru.itis.noteshare.service.ComposerService;
 import ru.itis.noteshare.service.GenreService;
-import ru.itis.noteshare.service.ScoreUploadService;
-import ru.itis.noteshare.validation.ValidationException;
+import ru.itis.noteshare.service.ScoreGenreService;
+import ru.itis.noteshare.service.ScoreService;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/upload")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
-    private ScoreUploadService scoreUploadService;
-    private GenreService genreService;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        scoreUploadService = (ScoreUploadService) config.getServletContext().getAttribute("scoreuploadservice");
-        genreService = (GenreService) config.getServletContext().getAttribute("genreservice");
-    }
+    private ScoreService scoreService = new ScoreService();
+    private ComposerService composerService = new ComposerService();
+    private GenreService genreService = new GenreService();
+    private ScoreGenreService scoreGenreService = new ScoreGenreService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("genres", genreService.getAllGenres());
-        req.setAttribute("difficulties", Difficulity.values());
+        List<GenreModel> genreModelList = genreService.getAllGenres();
+        req.setAttribute("genres",genreModelList);
+
         req.getRequestDispatcher("/jsp/upload.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String title = req.getParameter("title");
+        String diff = req.getParameter("diff");
+        String composerName = req.getParameter("composerName");
+        String genreName = req.getParameter("genre");
+
+        ComposerModel composerModel = composerService.getComposerByName(composerName);
+
+        Part part = req.getPart("scoreFile");
+
+        String fileName = "notelibrary.pdf";
+
+        ScoreModel score = new ScoreModel(title, fileName, diff );
+
         HttpSession session = req.getSession();
         UserModel userModel = (UserModel) session.getAttribute("user");
 
-        scoreUploadService.upload(
-                userModel,
-                req.getParameter("title"),
-                req.getParameter("diff"),
-                req.getParameter("composerName"),
-                req.getParameterValues("genre"),
-                req.getPart("scoreFile")
-        );
+        scoreService.loadFile(part, fileName);
+        score = scoreService.addScore(userModel, score, composerModel);
 
-        resp.sendRedirect(req.getContextPath() + "/score");
+        scoreGenreService.addGenreToScore(score, genreService.getGenreModelByName(genreName));
     }
 }

@@ -1,9 +1,7 @@
 package ru.itis.noteshare.enums;
 
-import lombok.Getter;
 import ru.itis.noteshare.validation.ValidationException;
 
-@Getter
 public enum Difficulity {
     EASY("easy", "Лёгкая"),
     MEDIUM("medium", "Средняя"),
@@ -15,6 +13,14 @@ public enum Difficulity {
     Difficulity(String value, String label) {
         this.value = value;
         this.label = label;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public static Difficulity fromValue(String value) {
