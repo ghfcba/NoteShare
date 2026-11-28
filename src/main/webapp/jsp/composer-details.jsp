@@ -44,8 +44,10 @@
                         <div class="scores-list">
                             <c:forEach var="score" items="${scoreList}">
 
-                                <a class="score-item"
-                                   href="${pageContext.request.contextPath}/score/details?id=${score.scoreId}">
+                                <c:url var="scoreUrl" value="/score/page">
+                                    <c:param name="id" value="${score.scoreId}"/>
+                                </c:url>
+                                <a class="score-item" href="${scoreUrl}">
                                     <span class="score-item__icon" aria-hidden="true">♫</span>
                                     <span class="score-item__main">
                                         <span class="score-item__title"><c:out value="${score.title}"/></span>
@@ -76,7 +78,7 @@
                 <span class="empty-state__icon" aria-hidden="true">𝄞</span>
                 <h1>Композитор не найден</h1>
                 <p>Возможно, ссылка устарела или запись была удалена.</p>
-                <a class="return-button" href="${pageContext.request.contextPath}/composer">Вернуться к композиторам</a>
+                <a class="return-button" href="${pageContext.request.contextPath}/composers">Вернуться к композиторам</a>
             </section>
         </c:otherwise>
     </c:choose>

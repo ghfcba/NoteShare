@@ -34,6 +34,7 @@ public class GenreDao {
         }
         return listOfGenres;
     }
+
     public GenreModel getGenreById(Long genreId){
         String sql = "select * from genres where genre_id = ?";
         GenreModel genreModel = null;
@@ -54,6 +55,7 @@ public class GenreDao {
             throw new RuntimeException(e);
         }
     }
+
     public GenreModel getGenreByName(String name){
         String sql = "select * from genres where name = ?";
         GenreModel genreModel = null;

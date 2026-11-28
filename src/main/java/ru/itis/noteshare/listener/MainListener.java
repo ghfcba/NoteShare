@@ -4,44 +4,65 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
-import jakarta.servlet.http.HttpSessionListener;
 import ru.itis.noteshare.dao.*;
-import ru.itis.noteshare.service.AuthService;
-import ru.itis.noteshare.service.ComposerService;
-import ru.itis.noteshare.service.GenreService;
-import ru.itis.noteshare.service.ScoreService;
-import ru.itis.noteshare.utils.DataConnection;
+import ru.itis.noteshare.service.*;
 
+import java.io.File;
 import java.sql.Connection;
+import java.sql.SQLException;
+
+import ru.itis.noteshare.utils.DataConnection;
 
 @WebListener
 public class MainListener implements ServletContextListener {
+    private Connection connection;
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ServletContext servletContext =  sce.getServletContext();
-        Connection connection = DataConnection.getConnection();
+        ServletContext servletContext = sce.getServletContext();
+        connection = DataConnection.getConnection();
+
         UserDao userDao = new UserDao(connection);
-        DownloadDao downloadDao = new DownloadDao(connection);
         GenreDao genreDao = new GenreDao(connection);
-        RatingDao ratingDao = new RatingDao(connection);
         ScoreDao scoreDao = new ScoreDao(connection);
         ScoreGenreDao scoreGenreDao = new ScoreGenreDao(connection);
-        AuthService authService = new AuthService();
-        ComposerService composerService = new ComposerService();
-        ScoreService scoreService = new ScoreService(scoreDao);
-        GenreService genreService = new GenreService();
+        ComposerDao composerDao = new ComposerDao(connection);
+
+        String scoresDir = servletContext.getRealPath("/assets/scores");
+        if (scoresDir == null) {
+            scoresDir = new File("assets/scores").getAbsolutePath();
+        }
+
+        FileStorageService fileStorageService = new FileStorageService(scoresDir);
+
+        AuthService authService = new AuthService(userDao);
+        ComposerService composerService = new ComposerService(composerDao);
+        ScoreService scoreService = new ScoreService(scoreDao, composerService);
+        GenreService genreService = new GenreService(genreDao);
+        ScoreGenreService scoreGenreService = new ScoreGenreService(scoreGenreDao);
+        DownloadService downloadService = new DownloadService(fileStorageService);
+        ScoreUploadService scoreUploadService = new ScoreUploadService(
+                scoreService, composerService, genreService, scoreGenreService, fileStorageService
+        );
 
         servletContext.setAttribute("userdao", userDao);
-        servletContext.setAttribute("downloaddao", downloadDao);
         servletContext.setAttribute("genredao", genreDao);
-        servletContext.setAttribute("ratingdao", ratingDao);
         servletContext.setAttribute("scoredao", scoreDao);
         servletContext.setAttribute("scoregenredao", scoreGenreDao);
+        servletContext.setAttribute("composerdao", composerDao);
+
+        servletContext.setAttribute("authservice", authService);
         servletContext.setAttribute("composerservice", composerService);
         servletContext.setAttribute("scoreservice", scoreService);
-        servletContext.setAttribute("authservice", authService);
         servletContext.setAttribute("genreservice", genreService);
+        servletContext.setAttribute("scoregenreservice", scoreGenreService);
+        servletContext.setAttribute("filestorageservice", fileStorageService);
+        servletContext.setAttribute("downloadservice", downloadService);
+        servletContext.setAttribute("scoreuploadservice", scoreUploadService);
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
 
     }
 }
-

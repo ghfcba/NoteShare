@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="ru">
@@ -16,14 +16,18 @@
     <section class="auth-card">
         <p class="eyebrow">Рады видеть снова</p><h1>Вход в аккаунт</h1>
         <p class="auth-description">Войдите, чтобы сохранять и публиковать ноты.</p>
-        <form class="auth-form" action="login" method="post">
+        <c:if test="${not empty error}">
+            <p class="form-error"><c:out value="${error}"/></p>
+        </c:if>
+        <form class="auth-form" action="${pageContext.request.contextPath}/login" method="post">
             <label for="login-email">Электронная почта</label>
-            <input id="login-email" name="email" type="email" autocomplete="email" required>
+            <input id="login-email" name="email" type="email" autocomplete="email"
+                   maxlength="100" value="<c:out value='${email}'/>" required>
             <label for="login-password">Пароль</label>
             <input id="login-password" name="password" type="password" autocomplete="current-password" required>
             <button type="submit">Войти</button>
         </form>
-        <p class="auth-switch">Ещё нет аккаунта? <a href="register">Зарегистрироваться</a></p>
+        <p class="auth-switch">Ещё нет аккаунта? <a href="${pageContext.request.contextPath}/register">Зарегистрироваться</a></p>
     </section>
 </main>
 <jsp:include page="/jsp/fragments/footer.jsp" />

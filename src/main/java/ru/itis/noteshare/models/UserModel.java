@@ -23,16 +23,4 @@ public class UserModel {
         this.email = email;
         this.passwordHash = passwordHash;
     }
-
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", passwordHash='" + passwordHash + '\'' +
-                ", registeredAt=" + registeredAt +
-                ", role='" + role + '\'' +
-                '}';
-    }
 }

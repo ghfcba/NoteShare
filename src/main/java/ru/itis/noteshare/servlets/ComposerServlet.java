@@ -1,5 +1,6 @@
 package ru.itis.noteshare.servlets;
 
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +14,14 @@ import java.util.List;
 
 @WebServlet("/composers")
 public class ComposerServlet extends HttpServlet {
-    private ComposerService composerService = new ComposerService();
+    private ComposerService composerService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        composerService = (ComposerService) config.getServletContext().getAttribute("composerservice");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<ComposerModel> composers = composerService.getAllComposers();

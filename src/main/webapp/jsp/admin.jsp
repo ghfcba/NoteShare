@@ -6,15 +6,23 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
 </head>
 <body>
+    <c:if test="${not empty error}">
+        <p class="form-error"><c:out value="${error}"/></p>
+    </c:if>
+
     <form action="${pageContext.request.contextPath}/admin" method="post">
         <label>Название нот</label>
-        <input type="text" name="title" required><br><br>
+        <input type="text" name="title" maxlength="150" required><br><br>
 
         <label>Композитор</label>
-        <input type="text" name="composer" required><br><br>
+        <input type="text" name="composer" maxlength="100" required><br><br>
 
-        <label for="composer-name">Сложность</label>
-        <input id="composer-name" name="diff" type="text" autocomplete="off" required><br><br>
+        <label for="composer-difficulty">Сложность</label>
+        <select id="composer-difficulty" name="diff" class="score-select" required>
+            <option value="easy">easy</option>
+            <option value="medium">medium</option>
+            <option value="hard">hard</option>
+        </select><br><br>
 
         <label>Жанр</label>
         <select id="genre" name="genre" class="score-select">
@@ -40,6 +48,7 @@
     <c:forEach var="score" items="${scoresPending}">
 
         <form action="${pageContext.request.contextPath}/admin" method="post">
+            <input type="hidden" name="scoreId" value="${score.scoreId}">
             <span>${score.title}</span>
             <select name="status">
                 <option value="pending" ${score.moderationStatus == 'pending' ? 'selected' : ''}>Pending</option>

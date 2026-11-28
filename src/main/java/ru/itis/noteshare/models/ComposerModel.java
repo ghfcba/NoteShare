@@ -21,13 +21,4 @@ public class ComposerModel {
         this.country = country;
     }
 
-    @Override
-    public String toString() {
-        return "ComposerModel{" +
-                "composerId=" + composerId +
-                ", fullName='" + fullName + '\'' +
-                ", country='" + country + '\'' +
-                '}';
-    }
-
 }

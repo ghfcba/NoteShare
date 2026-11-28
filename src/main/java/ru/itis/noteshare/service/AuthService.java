@@ -2,68 +2,62 @@ package ru.itis.noteshare.service;
 
 import ru.itis.noteshare.dao.UserDao;
 import ru.itis.noteshare.models.UserModel;
-import ru.itis.noteshare.utils.DataConnection;
 import ru.itis.noteshare.utils.HashUtil;
+import ru.itis.noteshare.validation.ValidationException;
+import ru.itis.noteshare.validation.Validator;
 
 public class AuthService {
-    private UserDao userDao = new UserDao(DataConnection.getConnection());
+    private final UserDao userDao;
 
-    public boolean registerUser() {
-        return true;
+    public AuthService(UserDao userDao) {
+        this.userDao = userDao;
     }
 
-//проверять есть ли юзер в бд
-    public boolean uniqueUsername(String username){
-        if (userDao.getUserByUsername(username) == null) {
-            return true;
-        }
-        return false;
+    public boolean uniqueUsername(String username) {
+        return userDao.getUserByUsername(username) == null;
     }
 
-    public boolean uniqueEmail(String email){
-        if (userDao.getUserByEmail(email) == null){
-            return true;
-        }
-        return false;
-    }
-    public boolean checkPass(String password1, String password2){
-        return password1.equals(password2);
+    public boolean uniqueEmail(String email) {
+        return userDao.getUserByEmail(email) == null;
     }
 
-    public void passHash(UserModel userModel){
+    public void passHash(UserModel userModel) {
         userModel.setPasswordHash(HashUtil.hashPassword(userModel.getPasswordHash()));
     }
 
-    public boolean registerUser(UserModel user){
-        if (!uniqueEmail(user.getEmail())){
-            return false;
-        }
-        if (!uniqueUsername(user.getUsername())){
-            return false;
+    public void registerUser(String username, String email, String password, String passwordConfirm) {
+        String cleanUsername = Validator.requireText(username, "Имя пользователя", 50);
+        String cleanEmail = Validator.requireEmail(email);
+        Validator.requirePassword(password);
+
+        if (passwordConfirm == null || !password.equals(passwordConfirm)) {
+            throw new ValidationException("Пароли не совпадают");
         }
 
+        if (!uniqueEmail(cleanEmail)) {
+            throw new ValidationException("Пользователь с таким email уже существует");
+        }
+
+        if (!uniqueUsername(cleanUsername)) {
+            throw new ValidationException("Пользователь с таким именем уже существует");
+        }
+
+        UserModel user = new UserModel(cleanUsername, cleanEmail, password);
         passHash(user);
-
         userDao.saveUser(user);
-
-        return true;
     }
 
     public UserModel getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
     }
 
-    public boolean loginUser(String email, String password){
+    public boolean loginUser(String email, String password) {
         UserModel user = userDao.getUserByEmail(email);
 
-        if(user == null){
+        if (user == null) {
             return false;
         }
-        System.out.println(user);
-        if (!HashUtil.verify(password, user.getPasswordHash())) {
-            return false;
-        }
-        System.out.println(user);
-        return true;
+
+        return HashUtil.verify(password, user.getPasswordHash());
     }
 }

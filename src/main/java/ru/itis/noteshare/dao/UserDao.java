@@ -60,6 +60,8 @@ public class UserDao {
         }
         return user;
     }
+
+
     public UserModel saveUser(UserModel user){
         String sql = "insert into users (username, email, password_hash, registered_at, role) values(?, ?, ?, ?,?)";
 

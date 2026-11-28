@@ -20,20 +20,34 @@
         <p>Добавьте произведение в галерею NoteShare.</p>
     </section>
 
+    <c:if test="${not empty error}">
+        <p class="form-error"><c:out value="${error}"/></p>
+    </c:if>
+
     <form class="upload-form" action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
         <label for="score-title">Название произведения</label>
-        <input id="score-title" name="title" type="text" autocomplete="off" required>
+        <input id="score-title" name="title" type="text" autocomplete="off"
+               maxlength="150" value="<c:out value='${title}'/>" required>
 
         <label for="composer-name">Композитор</label>
-        <input id="composer-name" name="composerName" type="text" autocomplete="off" required>
+        <input id="composer-name" name="composerName" type="text" autocomplete="off"
+               maxlength="100" value="<c:out value='${composerName}'/>" required>
 
-        <label for="composer-name">Сложность</label>
-        <input id="composer-name" name="diff" type="text" autocomplete="off" required>
+        <label for="score-difficulty">Сложность</label>
+        <select id="score-difficulty" name="diff" class="score-select" required>
+            <c:forEach var="difficulty" items="${difficulties}">
+                <option value="${difficulty.value}" ${diff == difficulty.value ? 'selected' : ''}>
+                    <c:out value="${difficulty.label}"/>
+                </option>
+            </c:forEach>
+        </select>
 
         <label>Жанр</label>
         <select id="genre" name="genre" class="score-select">
             <c:forEach var="genre" items="${genres}">
-                <option value="${genre.name}">${genre.name}</option>
+                <option value="${genre.name}" ${genre.name == selectedGenre ? 'selected' : ''}>
+                    <c:out value="${genre.name}"/>
+                </option>
             </c:forEach>
         </select>
 

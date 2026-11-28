@@ -22,21 +22,21 @@
             <p class="section-intro">Находите ноты, открывайте композиторов и делитесь музыкой.</p>
         </div>
         <div class="section-cards">
-            <a class="section-card" href="score">
+            <a class="section-card" href="${pageContext.request.contextPath}/score">
                 <span class="card-number">01</span>
                 <span class="card-icon" aria-hidden="true">♫</span>
                 <h3>Галерея нот</h3>
                 <p>Перейдите в каталог и найдите нужное произведение.</p>
             </a>
 
-            <a class="section-card" href="composers">
+            <a class="section-card" href="${pageContext.request.contextPath}/composers">
                 <span class="card-number">02</span>
                 <span class="card-icon" aria-hidden="true">𝄞</span>
                 <h3>Композиторы</h3>
                 <p>Откройте страницу композиторов и их произведений.</p>
             </a>
 
-            <a class="section-card" href="register">
+            <a class="section-card" href="${pageContext.request.contextPath}/register">
                 <span class="card-number">03</span>
                 <span class="card-icon" aria-hidden="true">✦</span>
                 <h3>Делитесь музыкой</h3>

@@ -16,6 +16,7 @@ public class ComposerDao {
     public ComposerDao(Connection connection) {
         this.connection = connection;
     }
+
     public ComposerModel saveComposer(ComposerModel composerModel){
         String sql = "insert into composers(full_name, country) values (?, ?)";
         try(PreparedStatement ps = connection.prepareStatement(sql)){
@@ -27,6 +28,7 @@ public class ComposerDao {
         }
         return composerModel;
     }
+
     public ComposerModel getCompByFullName(String fullName){
         String sql = "select * from composers where full_name = ?";
         ComposerModel composerModel = null;
@@ -49,6 +51,7 @@ public class ComposerDao {
         }
         return composerModel;
     }
+
     public ComposerModel getCompById(Long composerId) {
         String sql = "select * from composers where composer_id = ?";
         ComposerModel composerModel = null;
@@ -71,6 +74,7 @@ public class ComposerDao {
         }
         return composerModel;
     }
+
     public List<ComposerModel> getAllComposers(){
         String sql = "select * from composers";
         List<ComposerModel> listComp = new ArrayList<>();

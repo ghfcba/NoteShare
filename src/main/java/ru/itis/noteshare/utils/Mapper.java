@@ -5,8 +5,7 @@ import ru.itis.noteshare.models.ScoreModel;
 import ru.itis.noteshare.service.ComposerService;
 
 public class Mapper {
-    private static ComposerService composerService = new ComposerService();
-    public static ScoreDto modelToDto(ScoreModel scoreModel) {
+    public static ScoreDto modelToDto(ScoreModel scoreModel, ComposerService composerService) {
         ScoreDto scoreDto = ScoreDto.builder()
                 .title(scoreModel.getTitle())
                 .composerName(composerService.getComposerById(scoreModel.getComposerId()).getFullName())

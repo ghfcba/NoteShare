@@ -25,7 +25,7 @@
                 <li><a class="nav-link" href="${pageContext.request.contextPath}/composers">Композиторы</a></li>
                 <li><a class="nav-link" href="${pageContext.request.contextPath}/upload">Загрузить ноты</a></li>
                 <% if (isSignedIn) { %>
-                    <li><a class="nav-link account-link" href="${pageContext.request.contextPath}/profile">Профиль</a></li>
+                    <li><a class="nav-link account-link" href="${pageContext.request.contextPath}/logout">Выйти</a></li>
                 <% } else { %>
                     <li><a class="nav-link" href="${pageContext.request.contextPath}/login">Войти</a></li>
                     <li><a class="nav-link account-link" href="${pageContext.request.contextPath}/register">Регистрация</a></li>
