@@ -20,13 +20,13 @@
     </section>
 
     <c:url var="searchUrl" value="/composer" />
-    <form class="search-panel" action="${searchUrl}" method="get" role="search">
-        <label for="composer-query">Имя композитора</label>
-        <div class="search-row">
-            <input id="composer-query" name="q" type="search" placeholder="Введите имя композитора">
-            <button type="submit">Найти</button>
-        </div>
-    </form>
+<%--    <form class="search-panel" action="${searchUrl}" method="get" role="search">--%>
+<%--        <label for="composer-query">Имя композитора</label>--%>
+<%--        <div class="search-row">--%>
+<%--            <input id="composer-query" name="q" type="search" placeholder="Введите имя композитора">--%>
+<%--            <button type="submit">Найти</button>--%>
+<%--        </div>--%>
+<%--    </form>--%>
 
     <section class="catalog" aria-label="Композиторы в каталоге">
         <c:choose>

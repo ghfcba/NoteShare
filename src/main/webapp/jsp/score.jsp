@@ -21,14 +21,14 @@
     </section>
 
     <c:url var="searchUrl" value="/score" />
-    <form class="search-panel" action="${searchUrl}" method="get" role="search">
-        <label for="score-query">Поиск по каталогу</label>
-        <div class="search-row">
-            <input id="score-query" name="q" type="search"
-                   placeholder="Название произведения или композитор">
-            <button type="submit">Найти ноты</button>
-        </div>
-    </form>
+<%--    <form class="search-panel" action="${searchUrl}" method="get" role="search">--%>
+<%--        <label for="score-query">Поиск по каталогу</label>--%>
+<%--        <div class="search-row">--%>
+<%--            <input id="score-query" name="q" type="search"--%>
+<%--                   placeholder="Название произведения или композитор">--%>
+<%--            <button type="submit">Найти ноты</button>--%>
+<%--        </div>--%>
+<%--    </form>--%>
 
     <section class="catalog" aria-label="Ноты в каталоге">
         <div class="catalog-heading">

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSessionListener;
 import ru.itis.noteshare.dao.*;
 import ru.itis.noteshare.service.AuthService;
 import ru.itis.noteshare.service.ComposerService;
+import ru.itis.noteshare.service.GenreService;
 import ru.itis.noteshare.service.ScoreService;
 import ru.itis.noteshare.utils.DataConnection;
 
@@ -27,7 +28,8 @@ public class MainListener implements ServletContextListener {
         ScoreGenreDao scoreGenreDao = new ScoreGenreDao(connection);
         AuthService authService = new AuthService();
         ComposerService composerService = new ComposerService();
-        ScoreService scoreService = new ScoreService();
+        ScoreService scoreService = new ScoreService(scoreDao);
+        GenreService genreService = new GenreService();
 
         servletContext.setAttribute("userdao", userDao);
         servletContext.setAttribute("downloaddao", downloadDao);
@@ -38,6 +40,7 @@ public class MainListener implements ServletContextListener {
         servletContext.setAttribute("composerservice", composerService);
         servletContext.setAttribute("scoreservice", scoreService);
         servletContext.setAttribute("authservice", authService);
+        servletContext.setAttribute("genreservice", genreService);
 
     }
 }

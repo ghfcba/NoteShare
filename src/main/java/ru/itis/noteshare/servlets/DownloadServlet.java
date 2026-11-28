@@ -19,6 +19,8 @@ public class DownloadServlet extends HttpServlet{
     private DownloadService downloadService = new DownloadService();
     private ScoreService scoreService = new ScoreService();
 
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {

@@ -32,6 +32,7 @@
     color: #C9A55C;
     opacity: 0.95;
     pointer-events: none;
+    transform: translateY(0);
 }
 
 .footer-wave svg {
@@ -106,5 +107,39 @@
 
     .footer-line {
         margin-top: 28px;
+    }
+}
+
+/* Плавное появление при первом появлении футера на экране. */
+html.has-scroll-reveal .site-footer .footer-wave,
+html.has-scroll-reveal .site-footer .footer-content {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 1.15s cubic-bezier(.22,.7,.2,1), transform 1.15s cubic-bezier(.22,.7,.2,1);
+}
+html.has-scroll-reveal .site-footer .footer-content {
+    transition-delay: .14s;
+}
+html.has-scroll-reveal .site-footer.is-visible .footer-wave,
+html.has-scroll-reveal .site-footer.is-visible .footer-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+html.has-scroll-reveal .footer-wave path {
+    stroke-dasharray: 1800px;
+    stroke-dashoffset: 1800px;
+    transition: stroke-dashoffset 1.8s ease .12s;
+}
+html.has-scroll-reveal .site-footer.is-visible .footer-wave path {
+    stroke-dashoffset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+    html.has-scroll-reveal .site-footer .footer-wave,
+    html.has-scroll-reveal .site-footer .footer-content,
+    html.has-scroll-reveal .footer-wave path {
+        opacity: 1;
+        transform: none;
+        stroke-dashoffset: 0;
+        transition: none;
     }
 }

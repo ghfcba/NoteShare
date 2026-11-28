@@ -16,8 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreService {
-    private ScoreDao scoreDao = new ScoreDao(DataConnection.getConnection());
+    private ScoreDao scoreDao;
     private static final String dir = "C:\\Users\\MSI\\IdeaProjects\\NoteShare\\src\\main\\webapp\\assets\\scores";
+
+    public ScoreService(ScoreDao scoreDao) {
+        this.scoreDao = scoreDao;
+    }
 
     public ScoreModel addScore(UserModel user, ScoreModel score, ComposerModel composer){
         score.setUserId(user.getUserId());
@@ -66,5 +70,8 @@ public class ScoreService {
     }
     public ScoreModel getScoreById(Long scoreId){
         return scoreDao.getScoreById(scoreId);
+    }
+    public List<ScoreModel> getPendingScores(){
+        return scoreDao.getAllPendingScores();
     }
 }

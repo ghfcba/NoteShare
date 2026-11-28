@@ -43,7 +43,7 @@ public class UploadServlet extends HttpServlet {
 
         Part part = req.getPart("scoreFile");
 
-        String fileName = "хуй.pdf";
+        String fileName = "notelibrary.pdf";
 
         ScoreModel score = new ScoreModel(title, fileName, diff );
 

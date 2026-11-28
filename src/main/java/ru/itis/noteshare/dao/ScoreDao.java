@@ -100,7 +100,8 @@ public class ScoreDao {
         String sql = "delete from scores where score_id = ?";
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setLong(1, scoreModel.getScoreId());
-            ps.executeUpdate();
+            int deletedRows = ps.executeUpdate();
+            System.out.println("scoreId=" + scoreModel.getScoreId() + ", deletedRows=" + deletedRows);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -116,7 +117,7 @@ public class ScoreDao {
         }
     }
     public ScoreModel getScoreById(Long scoreId) {
-        String sql = "select * from scores where composer_id = ?";
+        String sql = "select * from scores where score_id = ?";
         ScoreModel scoreModel = null;
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, scoreId);
@@ -140,6 +141,29 @@ public class ScoreDao {
             throw new RuntimeException(e);
         }
         return scoreModel;
+    }
+    public List<ScoreModel> getAllPendingScores() {
+        String sql = "select * from scores where moderation_status = 'pending' ";
+        List<ScoreModel> scoreList = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ScoreModel scoreModel = ScoreModel.builder()
+                            .scoreId(rs.getLong("score_id"))
+                            .title(rs.getString("title"))
+                            .userId(rs.getLong("user_id"))
+                            .composerId(rs.getLong("composer_id"))
+                            .filePath(rs.getString("file_path"))
+                            .difficulty(rs.getString("difficulty"))
+                            .moderationStatus(rs.getString("moderation_status"))
+                            .uploadedAt(rs.getTimestamp("uploaded_at")).build();
+                    scoreList.add(scoreModel);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return scoreList;
     }
 
 }

@@ -1,5 +1,6 @@
 package ru.itis.noteshare.servlets;
 
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +14,13 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private AuthService authService = new AuthService();
+    private AuthService authService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        authService = (AuthService) config.getServletContext().getAttribute("authservice");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
