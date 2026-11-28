@@ -196,5 +196,28 @@ public class ScoreDao {
         }
         return scoreList;
     }
+    public List<ScoreModel> getAllApprovedScores() {
+        String sql = "select * from scores where moderation_status = 'approved' ";
+        List<ScoreModel> scoreList = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ScoreModel scoreModel = ScoreModel.builder()
+                            .scoreId(rs.getLong("score_id"))
+                            .title(rs.getString("title"))
+                            .userId(rs.getLong("user_id"))
+                            .composerId(rs.getLong("composer_id"))
+                            .filePath(rs.getString("file_path"))
+                            .difficulty(rs.getString("difficulty"))
+                            .moderationStatus(rs.getString("moderation_status"))
+                            .uploadedAt(rs.getTimestamp("uploaded_at")).build();
+                    scoreList.add(scoreModel);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return scoreList;
+    }
 
 }

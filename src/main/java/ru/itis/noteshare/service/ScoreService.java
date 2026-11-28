@@ -34,7 +34,7 @@ public class ScoreService {
     }
 
     public List<ScoreDto> getDtoScores(){
-        List<ScoreModel> scores = scoreDao.getAllNote();
+        List<ScoreModel> scores = scoreDao.getAllApprovedScores();
         List<ScoreDto> listDto = new ArrayList<>();
         for(ScoreModel scoreModel : scores){
             listDto.add(Mapper.modelToDto(scoreModel, composerService));
@@ -60,5 +60,8 @@ public class ScoreService {
 
     public List<ScoreModel> getPendingScores(){
         return scoreDao.getAllPendingScores();
+    }
+    public List<ScoreModel> getApprovedScores(){
+        return scoreDao.getAllApprovedScores();
     }
 }

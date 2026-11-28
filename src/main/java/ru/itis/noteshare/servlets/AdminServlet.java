@@ -73,7 +73,7 @@ public class AdminServlet extends HttpServlet {
                 req.getParameter("title"),
                 req.getParameter("diff"),
                 req.getParameter("composer"),
-                req.getParameter("genre"),
+                req.getParameterValues("genre"),
                 req.getPart("scoreFile")
         );
     }
@@ -96,6 +96,10 @@ public class AdminServlet extends HttpServlet {
         ScoreModel score = scoreService.getScoreById(scoreId);
         if (score == null) {
             throw new ValidationException("Ноты с указанным ID не найдены");
+        }
+
+        if (status.equals("rejected")) {
+            scoreService.deleteScore(score);
         }
 
         score.setModerationStatus(status.getValue());

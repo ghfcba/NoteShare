@@ -43,7 +43,7 @@ public class UploadServlet extends HttpServlet {
                 req.getParameter("title"),
                 req.getParameter("diff"),
                 req.getParameter("composerName"),
-                req.getParameter("genre"),
+                req.getParameterValues("genre"),
                 req.getPart("scoreFile")
         );
 

@@ -42,14 +42,16 @@
             </c:forEach>
         </select>
 
-        <label>Жанр</label>
-        <select id="genre" name="genre" class="score-select">
-            <c:forEach var="genre" items="${genres}">
-                <option value="${genre.name}" ${genre.name == selectedGenre ? 'selected' : ''}>
-                    <c:out value="${genre.name}"/>
-                </option>
-            </c:forEach>
-        </select>
+        <fieldset class="genre-options">
+        <legend>Жанры</legend>
+
+        <c:forEach var="genre" items="${genres}">
+            <label class="genre-option">
+                <input type="checkbox" name="genre" value="${genre.name}">
+                <c:out value="${genre.name}"/>
+            </label>
+        </c:forEach>
+    </fieldset>
 
         <label for="score-file">Файл нот (только PDF)</label>
         <input id="score-file" name="scoreFile" type="file" accept=".pdf,application/pdf" required>

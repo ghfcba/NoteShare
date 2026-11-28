@@ -20,7 +20,7 @@ public class AuthFilter extends HttpFilter {
             throws IOException, ServletException {
         String path = req.getServletPath();
 
-        if (path.startsWith("/assets/") || path.contains("/") || path.contains("/main") ||
+        if (path.startsWith("/assets/") || path.contains("/main") ||
                 path.contains("/login") || path.contains("/register") || path.contains("/logout") || path.contains("/download")) {
             chain.doFilter(req, res);
             return;
